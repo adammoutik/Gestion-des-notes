@@ -38,8 +38,8 @@ public class LoggedInController implements Initializable { //Interface used for 
     }
 
 
-    public void setUserInformation(String username, String favCar) {
+    public void setUserInformation(String username, String role) {
         label_welcome.setText("Welcome "+username);
-        label_fav_car.setText("Your favorite Car is "+ favCar);
+        label_fav_car.setText("You're a "+ role);
     }
 }

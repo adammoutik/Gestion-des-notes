@@ -29,6 +29,13 @@ public class SignUpController implements Initializable {
     @FXML
     private TextField tf_password;
 
+    @FXML
+    private TextField tf_firstName;
+
+    @FXML
+    private TextField tf_lastName;
+
+
 
 
 
@@ -47,8 +54,8 @@ public class SignUpController implements Initializable {
             public void handle(ActionEvent event) {
                 String toggleName = ((RadioButton) toggleGroup.getSelectedToggle()).getText(); //name of the radio button that is selected
 
-                if(!tf_username.getText().isEmpty() && !tf_password.getText().isEmpty()) {
-                    DBUtils.signUpUser(event, tf_username.getText(), tf_password.getText(), toggleName);
+                if(!tf_username.getText().isEmpty() && !tf_password.getText().isEmpty() && !tf_firstName.getText().isEmpty() && !tf_lastName.getText().isEmpty()) {
+                    DBUtils.signUpUser(event, tf_username.getText(), tf_password.getText(),toggleName, tf_firstName.getText(), tf_lastName.getText());
                 } else {
                     System.out.println("Please fill in all information");
                     Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -18,16 +18,16 @@ public class DBUtils {
 
 
 
-    public static void changeScene(ActionEvent event, String fxmlFile, String title, String username, String favCar) {
+    public static void changeScene(ActionEvent event, String fxmlFile, String title, String username, String role) {
 
         Parent root = null; //parent is a base class for all the nodes that have children in the scene, this var will be our new scene, turning the fxml file into a scene that we can load
 
-        if(username != null && favCar != null) {
+        if(username != null && role != null) {
             try {
                 FXMLLoader  loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));  //creates the scene from an fxml document
                 root = loader.load(); //we can pass the object that is returned into our root var
                 LoggedInController loggedInController = loader.getController(); // getting the controller so we can pass the data in, username and favCar
-                loggedInController.setUserInformation(username, favCar);
+                loggedInController.setUserInformation(username, role);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -49,15 +49,15 @@ public class DBUtils {
 
 
 
-    public static void signUpUser(ActionEvent event, String username, String password, String favCar) {
+    public static void signUpUser(ActionEvent event, String username, String password, String role, String firstName, String lastName) {
         Connection connection = null;
         PreparedStatement psInsert = null;
         PreparedStatement psCheckUserExists = null;
         ResultSet resultSet = null;
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysqlp://localhost:3306/javafxsql", "root", "Borsec1D"); // forming a connection to the databse
-            psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?"); // ? is the one item that will be targeted in order to be replaced by username
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/GestionNotes", "adamos", "password"); // forming a connection to the databse
+            psCheckUserExists = connection.prepareStatement("SELECT * FROM User WHERE username = ?"); // ? is the one item that will be targeted in order to be replaced by username
             psCheckUserExists.setString(1, username);
             resultSet = psCheckUserExists.executeQuery();
 
@@ -67,14 +67,17 @@ public class DBUtils {
                 alert.setContentText("You cannot use this username.");
                 alert.show();
             } else {
-                psInsert = connection.prepareStatement("INSERT INTO users (username, password, favCar) VALUES (?, ?, ?)");
-                psInsert.setString(1, username);
-                psInsert.setString(2, password);
-                psInsert.setString(3, favCar);
+                psInsert = connection.prepareStatement("INSERT INTO User (username, first_name, last_name, role, password) VALUES (?, ?, ?, ?, ?)");
+                psInsert.setString(1, username);    // username corresponds to the first question mark in the SQL statement
+                psInsert.setString(2, firstName);   // firstName corresponds to the second question mark
+                psInsert.setString(3, lastName);    // lastName corresponds to the third question mark
+                psInsert.setString(4, role);        // role corresponds to the fourth question mark
+                psInsert.setString(5, password);    // password corresponds to the fifth question mark
                 psInsert.executeUpdate();
 
 
-                changeScene(event, "logged-in.fxml", "Welcome!", username, favCar);
+
+                changeScene(event, "logged-in.fxml", "Welcome!", username, role);
             }
         } catch (SQLException e) { // everytime you are done with the db connection, close it
             e.printStackTrace();
@@ -104,7 +107,7 @@ public class DBUtils {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace(); //se poate ca change scene sa fie metoda se schimbat sceneul pentru logged in nu orice scene( loggeninController )
+                    e.printStackTrace();
                 }
             }
 
@@ -119,60 +122,52 @@ public class DBUtils {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        try{
-            connection = DriverManager.getConnection("jdbc:mysqlp://localhost:3306/javafxsql", "root", "Borsec1D");
-            preparedStatement = connection.prepareStatement("SELECT password, favCar FROM users WHERE username = ?");
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/GestionNotes", "adamos", "password");
+            preparedStatement = connection.prepareStatement("SELECT password, role FROM User WHERE username = ?");
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
 
-            if(resultSet.isBeforeFirst()) {   //if the user does not exist in the database
+            if (!resultSet.next()) { // Check if user doesn't exist
                 System.out.println("User not found in the database!");
+                // Display a generic error message without specifying user existence or password issues.
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Provided credentials are incorrect");
                 alert.show();
             } else {
-                while(resultSet.next()) {
-                    String retrievedPassword = resultSet.getString("password"); // only getting the password column
-                    String retrievedCar = resultSet.getString("favCar");
-                    if(retrievedPassword.equals(password)) {
-                        changeScene(event, "logged-in.fxml", "Welcome", username, retrievedCar);
-                    } else {
-                        System.out.println("Password did not match!");
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setContentText("The provided credentials are incorrect!");
-                        alert.show();
-                    }
+                String retrievedPassword = resultSet.getString("password");
+                String retrievedRole = resultSet.getString("role");
+
+                // Check password validity (consider using a secure password handling mechanism)
+                if (retrievedPassword.equals(password)) {
+                    changeScene(event, "logged-in.fxml", "Welcome", username, retrievedRole);
+                } else {
+                    System.out.println("Password did not match!");
+                    // Display a generic error message without specifying password issues.
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("The provided credentials are incorrect!");
+                    alert.show();
                 }
-
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {  //the order in which we close, result set, statement, connection
-            if(resultSet != null) {
-                try{
+        } finally {
+            // Close resources in reverse order of opening to avoid resource leaks
+            try {
+                if (resultSet != null) {
                     resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }
-            }
-            if(preparedStatement != null) {
-                try{
+                if (preparedStatement != null) {
                     preparedStatement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }
-            }
-            if(connection != null) {
-                try{
+                if (connection != null) {
                     connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
-
     }
-
 
 }
