@@ -20,14 +20,14 @@ public class UserImpl implements IUser {
     private String jdbcUsername = "adamos";
     private String jdbcPassword = "password";
 
-    private static final String INSERT_USER_SQL = "INSERT INTO Users" +
-        "  (ID, Username, Password, Role) VALUES " +
-        " (?, ?, ?, ?);";
+    private static final String INSERT_USER_SQL = "INSERT INTO User" +
+        "  (user_id, first_name, last_name, username, password, role) VALUES " +
+        " (?, ?, ?, ?, ? ,?);";
 
-    private static final String SELECT_USER_BY_ID = "select ID, Username, Password, Role from Users where ID =?";
-    private static final String SELECT_ALL_USERS = "select * from Users";
-    private static final String DELETE_USER_SQL = "delete from Users where ID = ?;";
-    private static final String UPDATE_USER_SQL = "update Users set Username = ?, Password= ?, Role =? where ID = ?;";
+    private static final String SELECT_USER_BY_ID = "select user_id, first_name, last_name, username, password, role from User where user_id =?";
+    private static final String SELECT_ALL_USERS = "select * from User";
+    private static final String DELETE_USER_SQL = "delete from User where user_id = ?;";
+    private static final String UPDATE_USER_SQL = "update Users set username = ?, password= ?, role =? where user_id = ?;";
 
     protected Connection getConnection() {
         Connection connection = null;
@@ -65,10 +65,12 @@ public class UserImpl implements IUser {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                String username = rs.getString("Username");
-                String password = rs.getString("Password");
-                String role = rs.getString("Role");
-                user = new User(id, username, password, role);
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String firstName = rs.getString("first_name");
+                String lastName = rs.getString("last_name");
+                String role = rs.getString("role");
+                user = new User(id,firstName , lastName, username, password, role);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -84,11 +86,13 @@ public class UserImpl implements IUser {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                int id = rs.getInt("ID");
-                String username = rs.getString("Username");
-                String password = rs.getString("Password");
-                String role = rs.getString("Role");
-                users.add(new User(id, username, password, role));
+                int id = rs.getInt("user_id");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String firstName = rs.getString("first_name");
+                String lastName = rs.getString("last_name");
+                String role = rs.getString("role");
+                users.add(new User(id,firstName, lastName, username, password, role));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -119,6 +123,14 @@ public class UserImpl implements IUser {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        UserImpl user = new UserImpl();
+        User u = user.findUser(1);
+
+            System.out.println(u.toString());
+
     }
 
 

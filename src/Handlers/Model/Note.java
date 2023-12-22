@@ -10,19 +10,23 @@ package Handlers.Model;
  */
 public class Note {
     private int note_id;
-    private Etudiant etudiant;    // etudiant_id in the database
+    private int etudiant_id;   // etudiant_id in the database
     private float note;
     private String type;
     private String status;
     private int class_id;
 
-    Note(int note_id, Etudiant e, float n, String t, String s, int id){
+    public Note(int note_id, int e, float n, String t, String s, int id){
         this.note_id = note_id;
-        this.etudiant = e;
+        this.etudiant_id = e;
         this.note = n;
         this.type = t;
         this.status = s;
         this.class_id = id;
+    }
+
+    public Note() {
+
     }
 
     public int getNote_id() {
@@ -33,8 +37,8 @@ public class Note {
         this.note_id = note_id;
     }
 
-    public Etudiant getEtudiant() {
-        return etudiant;
+    public int getEtudiant_id() {
+        return etudiant_id;
     }
 
     public float getNote() {
@@ -57,8 +61,8 @@ public class Note {
         this.class_id = class_id;
     }
 
-    public void setEtudiant(Etudiant etudiant) {
-        this.etudiant = etudiant;
+    public void setEtudiant_id(int etudiant_id) {
+        this.etudiant_id = etudiant_id;
     }
 
     public void setNote(float note) {
@@ -71,6 +75,18 @@ public class Note {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "note_id=" + note_id +
+                ", etudiant_id=" + etudiant_id +
+                ", note=" + note +
+                ", type='" + type + '\'' +
+                ", status='" + status + '\'' +
+                ", class_id=" + class_id +
+                '}';
     }
 
 

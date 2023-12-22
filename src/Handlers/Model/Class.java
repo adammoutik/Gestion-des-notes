@@ -12,10 +12,34 @@ import java.util.*;
  */
 public class Class {
     private int class_id;
-    private Professeur prof;
+    private int pf_id;
     private List<Etudiant> etudiants;
     private String className;
     protected Map<Etudiant, Set<Note>> mapNotes;
+
+    public Class(int classId, int prof, List<Etudiant> etudiants, String className) {
+        this.class_id = classId;
+        this.pf_id = prof;
+        this.etudiants = etudiants;
+        this.className = className;
+        this.mapNotes = new HashMap<>();
+    }
+
+    public void setPf_id(int pf_id) {
+        this.pf_id = pf_id;
+    }
+
+    public int getPf_id() {
+        return pf_id;
+    }
+
+    public void setClass_id(int class_id) {
+        this.class_id = class_id;
+    }
+
+    public int getClass_id() {
+        return class_id;
+    }
 
     public String getClassName() {
         return className;
@@ -29,9 +53,7 @@ public class Class {
         return mapNotes;
     }
 
-    public Professeur getProf() {
-        return prof;
-    }
+
 
     public void setClassName(String className) {
         this.className = className;
@@ -45,9 +67,7 @@ public class Class {
         this.mapNotes = mapNotes;
     }
 
-    public void setProf(Professeur prof) {
-        this.prof = prof;
-    }
+
     
     
     

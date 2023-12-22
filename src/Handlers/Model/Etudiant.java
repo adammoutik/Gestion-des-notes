@@ -4,6 +4,8 @@
  */
 package Handlers.Model;
 
+import Handlers.implementaion.EtudiantImpl;
+
 import java.util.*;
 
 /**
@@ -12,19 +14,35 @@ import java.util.*;
  */
 public class Etudiant extends User {
     private int eId;
-    private String eName;
     private int classId;
+    private int user_id;
     private Set<Note> notes;
 
-    public Etudiant(int eId, String eName, int classId, int id, String username, String password, String role) {
-        super(id, username, password, role);
+    public Etudiant(int eId, int classId,int user_id, int id, String username, String password, String role, String first_name, String last_name) {
+        super(id, first_name, last_name, username, password, role);
         this.eId = eId;
-        this.eName = eName;
+        this.user_id = user_id;
         this.classId = classId;
         this.notes = new HashSet<>();
     }
 
-    
+    public Etudiant(int eId, int classId, int user_id){
+        super();
+        this.eId = eId;
+        this.classId = classId;
+        this.user_id = user_id;
+        this.notes = new HashSet<>();
+
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
     public int getClassId() {
         return classId;
     }
@@ -37,9 +55,6 @@ public class Etudiant extends User {
         return eId;
     }
 
-    public String geteName() {
-        return eName;
-    }
 
     public void setClassId(int classId) {
         this.classId = classId;
@@ -53,9 +68,7 @@ public class Etudiant extends User {
         this.eId = eId;
     }
 
-    public void seteName(String eName) {
-        this.eName = eName;
-    }
+
     
     
 }
