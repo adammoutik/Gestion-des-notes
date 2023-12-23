@@ -22,14 +22,14 @@ public class DBUtils {
 
 
 
-    public static void changeProf(ActionEvent event, String fxmlFile, int pf_id){
+    public static void changeProf(ActionEvent event, String fxmlFile, int pf_id, int classId){
         Parent root = null;
         if(pf_id != -1){
             try {
                 FXMLLoader  loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));  //creates the scene from an fxml document
                 root = loader.load(); //we can pass the object that is returned into our root var
                 ProfController profController = loader.getController(); // getting the controller so we can pass the data in, username and favCar
-                profController.getProfInformations(pf_id);
+                profController.getProfInformations(pf_id, classId);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -113,9 +113,12 @@ public class DBUtils {
                                     if (genKeys.next()) {
                                         int pf_id = genKeys.getInt(1);
                                         //UPDATE CLASS OWNERSHIP
-                                        //new ClassImpl().updateClass(new ClassImpl().findClassbyName(cls));
+                                        ClassImpl los = new ClassImpl();
+                                        Class cl = los.findClassbyName(cls);
+                                        cl.setPf_id(pf_id);
+                                        los.updateClass(cl);
                                         System.out.println("Professeur inserted successfully.");
-                                        changeProf(event, "prof.fxml", pf_id);
+                                        changeProf(event, "prof.fxml", pf_id,cl.getClass_id());
                                     }
                                 }
                             }
@@ -164,7 +167,8 @@ public class DBUtils {
                 // Check password validity (consider using a secure password handling mechanism)
                 if (retrievedPassword.equals(password)) {
                     if(retrievedRole.equals("Professeur")){
-                        changeProf(event, "prof.fxml", new ProfesseurImpl().getProfIdByUsername(username));
+                        int pfId = new ProfesseurImpl().getProfIdByUsername(username);
+                        changeProf(event, "prof.fxml",pfId ,new ClassImpl().getClassIdByProfId(pfId));
                     }else{
                         changeScene(event, "logged-in.fxml", "Welcome", username, retrievedRole);
                     }

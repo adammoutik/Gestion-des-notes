@@ -6,4 +6,5 @@ module JAVA.FX.SQL {
     requires java.sql;
 
     opens sample;
+    opens Handlers.Model to javafx.base;
 }

@@ -190,7 +190,7 @@ public class EtudiantImpl {
 
     public static void main(String[] args) {
         // Assuming you have an instance of EtudiantImpl called etudiantImpl
-        int classId = new ClassImpl().getClassIdByProfId(1);
+
         List<Etudiant> etd = new EtudiantImpl().findEtudiantByClassId(1);
         if (!etd.isEmpty()) {
             for (Etudiant e : etd) {

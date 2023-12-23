@@ -22,7 +22,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="400.0" prefWidth="404.0">
+      <AnchorPane prefHeight="548.0" prefWidth="490.0">
          <children>
             <TextField fx:id="tf_username" layoutX="152.0" layoutY="56.0">
                <font>

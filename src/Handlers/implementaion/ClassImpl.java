@@ -24,7 +24,7 @@ public class ClassImpl {
     private static final String SELECT_CLASS_BY_PROF_ID = "select * from Class where pf_id =?";
     private static final String SELECT_ALL_CLASSES = "select * from Class";
     private static final String DELETE_CLASS_SQL = "delete from Class where class_id = ?;";
-    private static final String UPDATE_CLASS_SQL = "update Class set prof_id = ?, className = ? where class_id = ?;";
+    private static final String UPDATE_CLASS_SQL = "update Class set pf_id = ?, className = ? where class_id = ?;";
 
     /**
      *   getClassByProfId

@@ -25,6 +25,14 @@ public class Note {
         this.class_id = id;
     }
 
+    public Note( int e, float n, String t, String s, int id){
+        this.etudiant_id = e;
+        this.note = n;
+        this.type = t;
+        this.status = s;
+        this.class_id = id;
+    }
+
     public Note() {
 
     }

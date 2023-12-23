@@ -16,8 +16,8 @@ public class NoteImpl implements INote {
     private String jdbcPassword = "password";
 
     private static final String INSERT_NOTE_SQL = "INSERT INTO Note" +
-            "  (note_id, etudiant_id, type, note, status, class_id) VALUES " +
-            " (?, ?, ?, ?, ?, ?);";
+            "  ( etudiant_id, type, note, status, class_id) VALUES " +
+            " ( ?, ?, ?, ?, ?);";
 
     private static final String SELECT_NOTE_BY_ID = "select etudiant_id, type, note, status, class_id from Note where note_id =?";
     private static final String SELECT_ALL_NOTES = "select * from Note";
@@ -43,12 +43,11 @@ public class NoteImpl implements INote {
         try {
             Connection conn = getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(INSERT_NOTE_SQL);
-            preparedStatement.setInt(1, note.getNote_id());
-            preparedStatement.setInt(2, note.getEtudiant_id());
-            preparedStatement.setString(3, note.getType());
-            preparedStatement.setFloat(4, note.getNote());
-            preparedStatement.setString(5, note.getStatus());
-            preparedStatement.setInt(6, note.getClass_id());
+            preparedStatement.setInt(1, note.getEtudiant_id());
+            preparedStatement.setString(2, note.getType());
+            preparedStatement.setFloat(3, note.getNote());
+            preparedStatement.setString(4, note.getStatus());
+            preparedStatement.setInt(5, note.getClass_id());
             preparedStatement.executeUpdate(); // ...?
         } catch (SQLException e) {
             e.printStackTrace();
