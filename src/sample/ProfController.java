@@ -7,14 +7,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-
+import java.util.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ProfController {
 
     @FXML
-    private ChoiceBox<?> EtudiantList;
+    private ChoiceBox<String> EtudiantList;
 
     @FXML
     private Button addStudent;
@@ -43,8 +43,17 @@ public class ProfController {
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        List<Etudiant> etd = new EtudiantImpl().findEtudiantByClassId(new ProfesseurImpl().getClassIdByProfId(pf_id));
+        if(!etd.isEmpty()){
+            for(Etudiant e : etd){
+                EtudiantList.getItems().add(e.getFirst_name() + " " + e.getLast_name());
+            }
+        }
         EtudiantList.getItems().addAll();
+    }
+
+    public void getProfInformations(int pf_id){
+
     }
 
 }

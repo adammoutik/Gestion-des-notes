@@ -13,7 +13,7 @@ public class EtudiantImpl {
 
     private static final String SELECT_ETUDIANT_BY_ID = "SELECT etudiant_id, class_id, user_id FROM Etudiant WHERE etudiant_id = ?";
     private static final String SELECT_NOTES_BY_ETUDIANT_ID = "SELECT * FROM Note WHERE etudiant_id = ?";
-    private static final String INSERT_ETUDIANT_SQL = "INSERT INTO Etudiant (etudiant_id, class_id, user_id) VALUES (?, ?, ?)";
+    private static final String INSERT_ETUDIANT_SQL = "INSERT INTO Etudiant ( class_id, user_id) VALUES ( ?, ?)";
     private static final String UPDATE_ETUDIANT_SQL = "UPDATE Etudiant SET class_id = ?, user_id = ? WHERE etudiant_id = ?";
     private static final String DELETE_ETUDIANT_SQL = "DELETE FROM Etudiant WHERE etudiant_id = ?";
 
@@ -62,9 +62,8 @@ public class EtudiantImpl {
     public void insertEtudiant(Etudiant etudiant) {
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ETUDIANT_SQL)) {
-            preparedStatement.setInt(1, etudiant.geteId());
-            preparedStatement.setInt(2, etudiant.getClassId());
-            preparedStatement.setInt(3, etudiant.getUser_id());
+            preparedStatement.setInt(1, etudiant.getClassId());
+            preparedStatement.setInt(2, etudiant.getUser_id());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

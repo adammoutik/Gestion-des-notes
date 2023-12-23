@@ -146,4 +146,20 @@ public class ClassImpl {
             e.printStackTrace();
         }
     }
+
+    public Class findClassbyName(String name){
+        List<Class> clss = new ClassImpl().findAllClasses();
+
+        for(Class cl : clss){
+            if(cl.getClassName().equals(name) ){
+                return cl;
+            }
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new ClassImpl().findClassbyName("Java").getPf_id() == 0);
+    }
+
 }

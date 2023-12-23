@@ -26,9 +26,9 @@ public class Etudiant extends User {
         this.notes = new HashSet<>();
     }
 
-    public Etudiant(int eId, int classId, int user_id){
+    public Etudiant(int classId, int user_id){
         super();
-        this.eId = eId;
+        this.eId = -1;
         this.classId = classId;
         this.user_id = user_id;
         this.notes = new HashSet<>();
