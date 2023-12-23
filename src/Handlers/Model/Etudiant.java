@@ -68,7 +68,18 @@ public class Etudiant extends User {
         this.eId = eId;
     }
 
+    @Override
+    public String toString() {
+        return "Etudiant{" +
+                "eId=" + eId +
+                ", classId=" + classId +
+                ", user_id=" + user_id +
+                ", notes=" + notes +
+                "} " + super.toString();
+    }
 
-    
-    
+
+
+
+
 }

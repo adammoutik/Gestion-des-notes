@@ -112,6 +112,8 @@ public class DBUtils {
                                     ResultSet genKeys = psInsertProf.getGeneratedKeys();
                                     if (genKeys.next()) {
                                         int pf_id = genKeys.getInt(1);
+                                        //UPDATE CLASS OWNERSHIP
+                                        //new ClassImpl().updateClass(new ClassImpl().findClassbyName(cls));
                                         System.out.println("Professeur inserted successfully.");
                                         changeProf(event, "prof.fxml", pf_id);
                                     }
@@ -162,7 +164,7 @@ public class DBUtils {
                 // Check password validity (consider using a secure password handling mechanism)
                 if (retrievedPassword.equals(password)) {
                     if(retrievedRole.equals("Professeur")){
-                        changeProf(event, "prof.fxml", 0);
+                        changeProf(event, "prof.fxml", new ProfesseurImpl().getProfIdByUsername(username));
                     }else{
                         changeScene(event, "logged-in.fxml", "Welcome", username, retrievedRole);
                     }

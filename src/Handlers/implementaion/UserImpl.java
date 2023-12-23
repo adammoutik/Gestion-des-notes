@@ -25,6 +25,9 @@ public class UserImpl implements IUser {
         " (?, ?, ?, ?, ? ,?);";
 
     private static final String SELECT_USER_BY_ID = "select user_id, first_name, last_name, username, password, role from User where user_id =?";
+
+    private static final String SELECT_USER_BY_USERNAME = "select user_id, first_name, last_name, role from User where username =?";
+
     private static final String SELECT_ALL_USERS = "select * from User";
     private static final String DELETE_USER_SQL = "delete from User where user_id = ?;";
     private static final String UPDATE_USER_SQL = "update Users set username = ?, password= ?, role =? where user_id = ?;";
@@ -76,6 +79,23 @@ public class UserImpl implements IUser {
             e.printStackTrace();
         }
         return user;
+    }
+
+    public int findUserByUsername(String username) {
+        User user = null;
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_USERNAME)) {
+            preparedStatement.setString(1, username);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                int userId = rs.getInt("user_id");
+                return userId;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
 

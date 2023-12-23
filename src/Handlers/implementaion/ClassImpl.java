@@ -158,6 +158,22 @@ public class ClassImpl {
         return null;
     }
 
+    public int getClassIdByProfId(int profId){
+        try {
+
+            Connection con = getConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(SELECT_CLASS_BY_PROF_ID);
+            preparedStatement.setInt(1, profId);
+            ResultSet res = preparedStatement.executeQuery();
+            while(res.next()){
+                return res.getInt("class_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
         System.out.println(new ClassImpl().findClassbyName("Java").getPf_id() == 0);
     }

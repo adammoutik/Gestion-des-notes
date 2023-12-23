@@ -25,19 +25,21 @@ public class ProfesseurImpl {
         return connection;
     }
 
-    public int getClassIdByProfId(int profId){
-        try {
 
+
+    public int getProfIdByUsername(String username) {
+        try {
             Connection con = getConnection();
-            PreparedStatement preparedStatement = con.prepareStatement(SELECT_PROF_BY_CLASS_ID);
-            preparedStatement.setInt(1, profId);
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT pf_id FROM Professeur WHERE user_id = ?");
+            preparedStatement.setInt(1, new UserImpl().findUserByUsername(username));
             ResultSet res = preparedStatement.executeQuery();
-            while(res.next()){
-                return res.getInt("class_id");
+            if (res.next()) {
+                return res.getInt("pf_id");
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            // Handle the exception (logging, throwing custom exception, etc.) based on your requirements.
         }
-        return 0;
+        return 0; // Return an appropriate default value if no match is found.
     }
 }

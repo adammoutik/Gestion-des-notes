@@ -38,22 +38,22 @@ public class ProfController {
     private Button updateStudent;
 
     // we assume that we passed the prof_id after login
-    protected int pf_id = 0;
 
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        List<Etudiant> etd = new EtudiantImpl().findEtudiantByClassId(new ProfesseurImpl().getClassIdByProfId(pf_id));
+
+    }
+
+    public void getProfInformations(int pf_id){
+        List<Etudiant> etd = new EtudiantImpl().findEtudiantByClassId(new ClassImpl().getClassIdByProfId(pf_id));
         if(!etd.isEmpty()){
             for(Etudiant e : etd){
+                System.out.println(e.toString());
                 EtudiantList.getItems().add(e.getFirst_name() + " " + e.getLast_name());
             }
         }
         EtudiantList.getItems().addAll();
-    }
-
-    public void getProfInformations(int pf_id){
-
     }
 
 }

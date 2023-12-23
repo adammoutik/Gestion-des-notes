@@ -151,14 +151,38 @@ public class EtudiantImpl {
         return etudiants;
     }
 
-    public List<Etudiant> findEtudiantByClassId(int id){
-        List<Etudiant> allEtd = findAllEtudiants();
+    public List<Etudiant> findEtudiantByClassId(int id) {
         List<Etudiant> result = new ArrayList<>();
+        String query = "SELECT * FROM Etudiant WHERE class_id = ?";
 
-        for(Etudiant etudiant : allEtd){
-            if(etudiant.getClassId() == id){
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int etudiantId = rs.getInt("etudiant_id");
+                int classId = rs.getInt("class_id");
+                int userId = rs.getInt("user_id");
+                UserImpl u = new UserImpl();
+                User us = u.findUser(userId);
+                String username = us.getUsername();
+                String password = us.getPassword();
+                String role = us.getRole();
+                String first_name = us.getFirst_name();
+                String last_name = us.getLast_name();
+
+                // Fetch Notes for the Etudiant
+                Set<Note> notes = retrieveNotesForEtudiant(etudiantId);
+
+                // Create Etudiant object and add it to the list
+                Etudiant etudiant = new Etudiant(etudiantId, classId, userId, userId, username, password, role, first_name, last_name);
+                etudiant.setNotes(notes);
                 result.add(etudiant);
+
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return result;
     }
@@ -166,32 +190,30 @@ public class EtudiantImpl {
 
     public static void main(String[] args) {
         // Assuming you have an instance of EtudiantImpl called etudiantImpl
-        EtudiantImpl etudiantImpl = new EtudiantImpl();
-
-        // Finding an Etudiant by ID
-        Etudiant foundEtudiant = etudiantImpl.findEtudiant(2);
-        if (foundEtudiant != null) {
-            System.out.println("Found Etudiant: " + foundEtudiant.toString());
-        } else {
-            System.out.println("Etudiant not found");
-        }
+        int classId = new ClassImpl().getClassIdByProfId(1);
+        List<Etudiant> etd = new EtudiantImpl().findEtudiantByClassId(1);
+        if (!etd.isEmpty()) {
+            for (Etudiant e : etd) {
+                System.out.println(e.toString());
+            }
 
 //        // Updating an Etudiant
 //        // Assuming you have an Etudiant object with updated details
 //        Etudiant updatedEtudiant = new Etudiant();
 //        etudiantImpl.updateEtudiant(updatedEtudiant);
 
-        // Deleting an Etudiant by ID
+            // Deleting an Etudiant by ID
 //        int etudiantIdToDelete = /* provide an existing etudiant_id */;
 //        etudiantImpl.deleteEtudiant(etudiantIdToDelete);
 
-        // Retrieving all notes for a specific Etudiant
-        // Assuming you have an etudiantId for which you want to retrieve notes
+            // Retrieving all notes for a specific Etudiant
+            // Assuming you have an etudiantId for which you want to retrieve notes
 //        Set<Note> notesForEtudiant = etudiantImpl.retrieveNotesForEtudiant(/* etudiantId */);
 //        for (Note note : notesForEtudiant) {
 //            System.out.println("Note: " + note);
 //        }
-    }
 
+        }
+    }
 
 }
