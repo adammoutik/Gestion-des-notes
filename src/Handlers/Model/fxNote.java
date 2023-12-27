@@ -1,21 +1,26 @@
 package Handlers.Model;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 
 public class fxNote {
+    private SimpleIntegerProperty id;
     private SimpleStringProperty status;
     private SimpleStringProperty type;
     private SimpleDoubleProperty note;
     private SimpleStringProperty nom;
     private SimpleStringProperty prenom;
+    private SimpleIntegerProperty note_id;
 
-    public fxNote(String status, String type, float note, String nom, String prenom) {
+    public fxNote(int id, String status, String type, double note, String nom, String prenom,int note_id) {
+        this.id = new SimpleIntegerProperty(id);
         this.status = new SimpleStringProperty(status);
         this.type = new SimpleStringProperty(type);
         this.note = new SimpleDoubleProperty(note);
         this.nom = new SimpleStringProperty(nom);
         this.prenom = new SimpleStringProperty(prenom);
+        this.note_id = new SimpleIntegerProperty(note_id);
     }
 
     // Getters and setters for each property
@@ -81,5 +86,12 @@ public class fxNote {
         this.type.set(type);
     }
 
+    public int getId() {
+        return id.get();
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
+    }
 }
 

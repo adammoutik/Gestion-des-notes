@@ -45,7 +45,7 @@ public class NoteImpl implements INote {
             PreparedStatement preparedStatement = conn.prepareStatement(INSERT_NOTE_SQL);
             preparedStatement.setInt(1, note.getEtudiant_id());
             preparedStatement.setString(2, note.getType());
-            preparedStatement.setFloat(3, note.getNote());
+            preparedStatement.setDouble(3, note.getNote());
             preparedStatement.setString(4, note.getStatus());
             preparedStatement.setInt(5, note.getClass_id());
             preparedStatement.executeUpdate(); // ...?
@@ -74,7 +74,7 @@ public class NoteImpl implements INote {
             preparedStatement.setString(1, note.getType());
             preparedStatement.setInt(2, note.getEtudiant_id());
             preparedStatement.setString(3, note.getType());
-            preparedStatement.setFloat(4, note.getNote());
+            preparedStatement.setDouble(4, note.getNote());
             preparedStatement.setString(5, note.getStatus());
             preparedStatement.setInt(6, note.getNote_id());
             preparedStatement.executeUpdate();
@@ -99,7 +99,7 @@ public class NoteImpl implements INote {
             while (resultSet.next()) {
                 int etId = resultSet.getInt("etudiant_id");
                 String type = resultSet.getString("type");
-                float note = resultSet.getFloat("note");
+                double note = resultSet.getDouble("note");
                 String status = resultSet.getString("status");
                 int class_id = resultSet.getInt("class_id");
                 notee = new Note(id, etId, note, type, status, class_id);
@@ -125,7 +125,7 @@ public class NoteImpl implements INote {
                 int noteId = rs.getInt("note_id");
                 int etudiantId = rs.getInt("etudiant_id");
                 String type = rs.getString("type");
-                float noteContent = rs.getFloat("note");
+                double noteContent = rs.getDouble("note");
                 String status = rs.getString("status");
                 int classId = rs.getInt("class_id");
 
@@ -147,18 +147,18 @@ public class NoteImpl implements INote {
         return notes;
     }
 
-//    public List<Note> getNoteByEtudiantId(int id){
-//        List<Note> notes = findAllNotes();
-//        List<Note> res = new ArrayList<>();
-//
-//        for(Note note : notes){
-//            if(note.getEtudiant_id() == id){
-//                res.add(note);
-//            }
-//        }
-//
-//        return res;
-//    }
+    public List<Note> getNoteByEtudiantId(int id){
+        List<Note> notes = findAllNotes();
+        List<Note> res = new ArrayList<>();
+
+        for(Note note : notes){
+            if(note.getEtudiant_id() == id){
+                res.add(note);
+            }
+        }
+
+        return res;
+    }
 
     public static void main(String[] args) {
         NoteImpl noteImpl = new NoteImpl();

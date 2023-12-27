@@ -103,7 +103,7 @@ public class EtudiantImpl {
                 // Retrieve other note attributes from the ResultSet
                 int etId = rs.getInt("etudiant_id");
                 String type = rs.getString("type");
-                float n = rs.getFloat("note");
+                double n = rs.getDouble("note");
                 String status = rs.getString("status");
                 int class_id = rs.getInt("class_id");
                 Note note = new Note(noteId, etId, n,type ,status, class_id);

@@ -51,7 +51,7 @@
                               <Font name="Fira Code Medium" size="12.0" />
                            </font>
                         </Button>
-                        <Button fx:id="updateStudent" layoutX="51.0" layoutY="20.0" mnemonicParsing="false" text="Edit">
+                        <Button fx:id="updateStudent" layoutX="51.0" layoutY="20.0" mnemonicParsing="false" onAction="#updateStudent" text="Edit">
                            <font>
                               <Font name="Fira Code Medium" size="12.0" />
                            </font>
@@ -69,12 +69,14 @@
                         <Font name="Fira Code Medium" size="12.0" />
                      </font>
                   </Label>
+                  <TextField fx:id="hiddenNoteId" editable="false" layoutX="315.0" layoutY="62.0" prefHeight="25.0" prefWidth="74.0" promptText="..." visible="false" />
                </children>
             </Pane>
             <Pane layoutY="214.0" prefHeight="324.0" prefWidth="799.0">
                <children>
-                  <TableView fx:id="studentsTable" editable="true" fixedCellSize="30.0" layoutX="40.0" layoutY="21.0" prefHeight="283.0" prefWidth="720.0">
+                  <TableView fx:id="studentsTable" editable="true" fixedCellSize="30.0" layoutX="40.0" layoutY="21.0" onMouseClicked="#addToTable" prefHeight="283.0" prefWidth="720.0">
                     <columns>
+                        <TableColumn fx:id="noteIdCol" prefWidth="75.0" text="ID" visible="false" />
                       <TableColumn fx:id="nomCol" prefWidth="75.0" text="Nom" />
                       <TableColumn fx:id="prenomCol" prefWidth="75.0" text="Prenom" />
                         <TableColumn fx:id="typeCol" prefWidth="75.0" text="Type" />

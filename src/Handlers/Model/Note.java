@@ -11,12 +11,12 @@ package Handlers.Model;
 public class Note {
     private int note_id;
     private int etudiant_id;   // etudiant_id in the database
-    private float note;
+    private double note;
     private String type;
     private String status;
     private int class_id;
 
-    public Note(int note_id, int e, float n, String t, String s, int id){
+    public Note(int note_id, int e, double n, String t, String s, int id){
         this.note_id = note_id;
         this.etudiant_id = e;
         this.note = n;
@@ -25,7 +25,7 @@ public class Note {
         this.class_id = id;
     }
 
-    public Note( int e, float n, String t, String s, int id){
+    public Note( int e, double n, String t, String s, int id){
         this.etudiant_id = e;
         this.note = n;
         this.type = t;
@@ -49,7 +49,7 @@ public class Note {
         return etudiant_id;
     }
 
-    public float getNote() {
+    public double getNote() {
         return note;
     }
 
@@ -73,7 +73,7 @@ public class Note {
         this.etudiant_id = etudiant_id;
     }
 
-    public void setNote(float note) {
+    public void setNote(double note) {
         this.note = note;
     }
 

@@ -59,7 +59,7 @@ public class SignUpController implements Initializable {
         for(Class cl : clsList){
             Classes.getItems().add(cl.getClassName());
         }
-        ;
+
         button_signup.setOnAction(new EventHandler<ActionEvent>() {
 
 
