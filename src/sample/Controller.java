@@ -61,7 +61,9 @@ public class Controller implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "sign-up.fxml","Sign up!", null, null);
+                DBUtils.changeScene(event, "sign-up.fxml", "Sign up!", null, -1);
+
+
             }
         });
 

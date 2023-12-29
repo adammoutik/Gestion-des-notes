@@ -71,6 +71,9 @@ public class ProfController implements Initializable {
     @FXML
     private TextField hiddenNoteId;
 
+    @FXML
+    private Button button_logout;
+
     private ObservableList<fxNote> data;
 
     int index = -1;
@@ -83,6 +86,15 @@ public class ProfController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String[] items = {"Validé", "Non validé", "Rattrapage"};
         statusSelect.getItems().addAll(items);
+
+
+        button_logout.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.changeScene(event, "sample.fxml", "Log In!", null, -1);
+            }
+        });
 
 
     }

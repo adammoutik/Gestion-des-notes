@@ -187,6 +187,22 @@ public class EtudiantImpl {
         return result;
     }
 
+    public int getEtudiantIdByUsername(String username) {
+        try {
+            Connection con = getConnection();
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT etudiant_id FROM Etudiant WHERE user_id = ?");
+            preparedStatement.setInt(1, new UserImpl().findUserByUsername(username));
+            ResultSet res = preparedStatement.executeQuery();
+            if (res.next()) {
+                return res.getInt("etudiant_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception (logging, throwing custom exception, etc.) based on your requirements.
+        }
+        return 0; // Return an appropriate default value if no match is found.
+    }
+
 
     public static void main(String[] args) {
         // Assuming you have an instance of EtudiantImpl called etudiantImpl

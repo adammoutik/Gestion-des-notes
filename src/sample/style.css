@@ -1,0 +1,32 @@
+/* Styling for text inputs */
+.text-input {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+}
+
+/* Styling for choice boxes */
+.choice-box {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+}
+
+/* Styling for buttons */
+.button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 15px;
+    -fx-border-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: #45a049;
+}
+
+

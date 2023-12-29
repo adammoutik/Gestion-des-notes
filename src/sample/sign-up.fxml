@@ -9,13 +9,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="691.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SignUpController">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FED700;">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFF;">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-1.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="32.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@face.png" />
                </image>
@@ -24,82 +25,91 @@
       </AnchorPane>
       <AnchorPane prefHeight="548.0" prefWidth="490.0">
          <children>
-            <TextField fx:id="tf_username" layoutX="152.0" layoutY="56.0">
+            <TextField fx:id="tf_username" layoutX="156.0" layoutY="121.0">
                <font>
                   <Font name="Arial Rounded MT Bold" size="17.0" />
                </font>
             </TextField>
-            <Label layoutX="28.0" layoutY="50.0" prefHeight="44.0" prefWidth="81.0" text="Username">
+            <Label layoutX="28.0" layoutY="115.0" prefHeight="44.0" prefWidth="112.0" text="Username :">
                <font>
-                  <Font name="Arial Rounded MT Bold" size="16.0" />
+                  <Font name="Fira Code Medium" size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="tf_password" layoutX="152.0" layoutY="100.0">
+            <TextField fx:id="tf_password" layoutX="156.0" layoutY="165.0">
                <font>
                   <Font name="Arial Rounded MT Bold" size="17.0" />
                </font>
             </TextField>
-            <Label layoutX="28.0" layoutY="94.0" prefHeight="44.0" prefWidth="81.0" text="Password">
+            <Label layoutX="28.0" layoutY="159.0" prefHeight="44.0" prefWidth="103.0" text="Password :">
                <font>
-                  <Font name="Arial Rounded MT Bold" size="16.0" />
+                  <Font name="Fira Code Medium" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="28.0" layoutY="248.0" prefHeight="44.0" prefWidth="103.0" text="Role :">
+            <Label layoutX="28.0" layoutY="303.0" prefHeight="44.0" prefWidth="103.0" text="Role :">
                <font>
-                  <Font name="Arial Rounded MT Bold" size="16.0" />
+                  <Font name="Fira Code Medium" size="16.0" />
                </font>
             </Label>
-            <RadioButton fx:id="rb_miata" layoutX="28.0" layoutY="292.0" mnemonicParsing="false" text="Student">
+            <RadioButton fx:id="rb_miata" layoutX="28.0" layoutY="347.0" mnemonicParsing="false" text="Student">
                <font>
-                  <Font name="Arial Rounded MT Bold" size="16.0" />
+                  <Font name="Fira Code Medium" size="16.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="rb_irelevant" layoutX="28.0" layoutY="328.0" mnemonicParsing="false" text="Professeur">
+            <RadioButton fx:id="rb_irelevant" layoutX="28.0" layoutY="383.0" mnemonicParsing="false" text="Professeur">
                <font>
-                  <Font name="Arial Rounded MT Bold" size="16.0" />
+                  <Font name="Fira Code Medium" size="16.0" />
                </font>
             </RadioButton>
-            <Button fx:id="button_signup" layoutX="132.0" layoutY="405.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="164.0" style="-fx-background-color: #FED700;" text="Signup">
+            <Button fx:id="button_signup" layoutX="168.0" layoutY="446.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="164.0" style="-fx-background-color: #3E52C1;" text="Signup" textFill="WHITE">
                <font>
-                  <Font name="Arial Rounded MT Bold" size="16.0" />
+                  <Font name="Fira Code Medium" size="16.0" />
                </font>
             </Button>
-            <Label layoutX="80.0" layoutY="449.0" prefHeight="44.0" prefWidth="164.0" text="Already a member?">
+            <Label layoutX="117.0" layoutY="490.0" prefHeight="44.0" prefWidth="164.0" text="Already a member?">
                <font>
-                  <Font name="Arial Rounded MT Bold" size="16.0" />
+                  <Font name="Fira Code Medium" size="15.0" />
                </font>
             </Label>
-            <Button fx:id="button_log_in" layoutX="250.0" layoutY="457.0" mnemonicParsing="false" style="-fx-background-color: TRANSPARENT;" text="Log In!" textFill="#2200ff" underline="true">
+            <Button fx:id="button_log_in" layoutX="287.0" layoutY="498.0" mnemonicParsing="false" style="-fx-background-color: TRANSPARENT;" text="Log In!" textFill="#2200ff" underline="true">
                <font>
-                  <Font name="Arial Rounded MT Bold" size="14.0" />
+                  <Font name="Fira Code Medium" size="15.0" />
                </font>
             </Button>
-            <TextField fx:id="tf_firstName" layoutX="152.0" layoutY="144.0">
+            <TextField fx:id="tf_firstName" layoutX="156.0" layoutY="209.0">
                <font>
                   <Font name="Arial Rounded MT Bold" size="17.0" />
                </font>
             </TextField>
-            <Label layoutX="28.0" layoutY="138.0" prefHeight="44.0" prefWidth="103.0" text="First Name">
+            <Label layoutX="24.0" layoutY="203.0" prefHeight="44.0" prefWidth="120.0" text="First Name :">
                <font>
-                  <Font name="Arial Rounded MT Bold" size="16.0" />
+                  <Font name="Fira Code Medium" size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="tf_lastName" layoutX="152.0" layoutY="188.0">
+            <TextField fx:id="tf_lastName" layoutX="156.0" layoutY="253.0">
                <font>
                   <Font name="Arial Rounded MT Bold" size="17.0" />
                </font>
             </TextField>
-            <Label layoutX="28.0" layoutY="182.0" prefHeight="44.0" prefWidth="90.0" text="Last Name">
+            <Label layoutX="28.0" layoutY="247.0" prefHeight="44.0" prefWidth="120.0" text="Last Name :">
                <font>
-                  <Font name="Arial Rounded MT Bold" size="16.0" />
+                  <Font name="Fira Code Medium" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="206.0" layoutY="248.0" prefHeight="44.0" prefWidth="103.0" text="Class :">
+            <Label layoutX="289.0" layoutY="303.0" prefHeight="44.0" prefWidth="103.0" text="Class :">
                <font>
-                  <Font name="Arial Rounded MT Bold" size="16.0" />
+                  <Font name="Fira Code Medium" size="16.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="Classes" layoutX="208.0" layoutY="303.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="Classes" layoutX="289.0" layoutY="373.0" prefWidth="150.0" />
+            <Pane layoutX="211.0" layoutY="12.0" prefHeight="102.0" prefWidth="120.0">
+               <children>
+                  <ImageView fitHeight="102.0" fitWidth="90.0" layoutX="7.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@log-in.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
          </children></AnchorPane>
    </children>
 </HBox>

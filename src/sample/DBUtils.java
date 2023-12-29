@@ -39,16 +39,16 @@ public class DBUtils {
             stage.show();
         }
     }
-    public static void changeScene(ActionEvent event, String fxmlFile, String title, String username, String role) {
+    public static void changeScene(ActionEvent event, String fxmlFile, String title, String username, int note_id) {
 
         Parent root = null; //parent is a base class for all the nodes that have children in the scene, this var will be our new scene, turning the fxml file into a scene that we can load
 
-        if(username != null && role != null) {
+        if(username != null && note_id != -1) {
             try {
                 FXMLLoader  loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));  //creates the scene from an fxml document
                 root = loader.load(); //we can pass the object that is returned into our root var
                 LoggedInController loggedInController = loader.getController(); // getting the controller so we can pass the data in, username and favCar
-                loggedInController.setUserInformation(username, role);
+                loggedInController.setUserInformation(username, note_id);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -170,7 +170,8 @@ public class DBUtils {
                         int pfId = new ProfesseurImpl().getProfIdByUsername(username);
                         changeProf(event, "prof.fxml",pfId ,new ClassImpl().getClassIdByProfId(pfId));
                     }else{
-                        changeScene(event, "logged-in.fxml", "Welcome", username, retrievedRole);
+
+                        changeScene(event, "logged-in.fxml", "Welcome", username,new EtudiantImpl().getEtudiantIdByUsername(username));
                     }
 
 
