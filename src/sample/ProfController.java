@@ -226,7 +226,7 @@ public class ProfController implements Initializable {
         inType.setText(selectedNote.getType());
         inNote.setText(String.valueOf(selectedNote.getNote()));
         statusSelect.setValue(selectedNote.getStatus());
-        hiddenNoteId.setText(String.valueOf(selectedNote.getId()));
+        hiddenNoteId.setText(String.valueOf(selectedNote.getNote_id()));
     }
 
 
@@ -235,6 +235,7 @@ public class ProfController implements Initializable {
             String[] res = EtudiantList.getValue().split(" ");
             NoteImpl noteImpl = new NoteImpl();
             Etudiant et = new EtudiantImpl().findEtudiant(Integer.parseInt(res[0]));
+            System.out.println(hiddenNoteId.getText());
             Note nt = noteImpl.findNote(Integer.parseInt(hiddenNoteId.getText()));
             nt.setEtudiant_id(Integer.parseInt(res[0]));
             nt.setNote(Double.parseDouble(inNote.getText()));

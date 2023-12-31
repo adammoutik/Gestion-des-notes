@@ -69,12 +69,12 @@
                         <Font name="Fira Code Medium" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="hiddenNoteId" editable="false" layoutX="315.0" layoutY="62.0" prefHeight="25.0" prefWidth="74.0" promptText="..." visible="false" />
                   <Button fx:id="button_logout" layoutX="-3.0" layoutY="-5.0" mnemonicParsing="false" style="-fx-background-color: red; -fx-border-radius: 5px;" text="Logout">
                      <font>
                         <Font name="Fira Code Medium" size="12.0" />
                      </font>
                   </Button>
+                  <TextField fx:id="hiddenNoteId" editable="false" layoutX="312.0" layoutY="72.0" prefHeight="25.0" prefWidth="74.0" />
                </children>
             </Pane>
             <Pane layoutY="214.0" prefHeight="324.0" prefWidth="799.0">
