@@ -86,9 +86,12 @@ public class DBUtils {
 
             if (resultSet.isBeforeFirst()) { //check if the result set is empty, if it returns true - the username is taken
                 System.out.println("User already exist");
+
                 Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Registration Error");
+                alert.setHeaderText(null);
                 alert.setContentText("You cannot use this username.");
-                alert.show();
+                alert.showAndWait();
             } else{  //if the class is not taken by a professor
                 psInsert = connection.prepareStatement(insertUserQuery, Statement.RETURN_GENERATED_KEYS);
                 psInsert.setString(1, username);
@@ -122,15 +125,22 @@ public class DBUtils {
                                     }
                                 }
                             }
-                        } else if (new ClassImpl().findClassbyName(cls).getPf_id() != 0) {
+                        } else if (new ClassImpl().findClassbyName(cls).getPf_id() != 0 && role.equals("Professeur")) {
                             System.out.println("Class taken by another professeur");
                             Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setContentText("This class is taken by another professor!");
-                            alert.show();
+                            alert.setTitle("Registration Error");
+                            alert.setHeaderText(null);
+                            alert.setContentText("This class is taken by another professor, contact administration for more informations!");
+                            alert.showAndWait();
                         } else {
                             int classId = new ClassImpl().findClassbyName(cls).getClass_id();
                             Etudiant et = new Etudiant(classId, userId);
                             new EtudiantImpl().insertEtudiant(et);
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Registred successfully");
+                            alert.setHeaderText(null);
+                            alert.setContentText("You've been successfully registered, login now !");
+                            alert.showAndWait();
                             System.out.println("Etudiant inserted successfully.");
                         }
                     }
@@ -156,10 +166,11 @@ public class DBUtils {
 
             if (!resultSet.next()) { // Check if user doesn't exist
                 System.out.println("User not found in the database!");
-                // Display a generic error message without specifying user existence or password issues.
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Provided credentials are incorrect");
-                alert.show();
+                alert.setTitle("Authentication Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Provided credentials are incorrect.");
+                alert.showAndWait();
             } else {
                 String retrievedPassword = resultSet.getString("password");
                 String retrievedRole = resultSet.getString("role");
@@ -178,10 +189,11 @@ public class DBUtils {
 
                 } else {
                     System.out.println("Password did not match!");
-                    // Display a generic error message without specifying password issues.
                     Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Authentication Error");
+                    alert.setHeaderText(null);
                     alert.setContentText("The provided credentials are incorrect!");
-                    alert.show();
+                    alert.showAndWait();
                 }
             }
         } catch (SQLException e) {

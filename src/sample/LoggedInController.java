@@ -89,5 +89,11 @@ public class LoggedInController implements Initializable { //Interface used for 
         titleCol.setCellValueFactory(new PropertyValueFactory<>("className"));
 
     }
-
+    /**
+     *  TODO:
+     *      - students can attend several classes .
+     *      - professors should have ability to remove students .
+     *          x- a student attending a class should be treated like a request that can be accepted only by the professor .
+     *
+     * */
 }

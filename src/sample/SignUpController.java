@@ -31,7 +31,7 @@ public class SignUpController implements Initializable {
     private TextField tf_username;
 
     @FXML
-    private TextField tf_password;
+    private PasswordField tf_password;
 
     @FXML
     private TextField tf_firstName;
@@ -77,6 +77,8 @@ public class SignUpController implements Initializable {
                 } else {
                     System.out.println("Please fill in all information");
                     Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Authentication Error");
+                    alert.setHeaderText(null);
                     alert.setContentText("Please fill in all information to sign up!");
                     alert.show();
                 }

@@ -10,9 +10,9 @@
 
 <AnchorPane fx:id="logout" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoggedInController">
    <children>
-      <Label fx:id="label_welcome" layoutX="70.0" layoutY="65.0" text="Welcome!">
+      <Label fx:id="label_welcome" layoutX="235.0" layoutY="28.0" text="Welcome!">
          <font>
-            <Font name="Arial Rounded MT Bold" size="20.0" />
+            <Font name="Fira Code Medium" size="18.0" />
          </font>
       </Label>
       <Label fx:id="label_fav_car" layoutX="374.0" layoutY="65.0" visible="false">
@@ -20,9 +20,9 @@
             <Font name="Arial Rounded MT Bold" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="button_logout" layoutX="7.0" layoutY="354.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="78.0" style="-fx-background-color: #FED700;" text="Logout">
+      <Button fx:id="button_logout" layoutX="10.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="62.0" style="-fx-background-color: red; -fx-border-radius: 5px;" text="Logout">
          <font>
-            <Font name="Arial Rounded MT Bold" size="16.0" />
+            <Font name="Fira Code Medium" size="12.0" />
          </font>
       </Button>
       <Pane layoutX="40.0" layoutY="128.0" prefHeight="200.0" prefWidth="534.0">
@@ -40,5 +40,10 @@
             </TableView>
          </children>
       </Pane>
+      <Label fx:id="label_welcome1" layoutX="113.0" layoutY="64.0" text="All available grades are below">
+         <font>
+            <Font name="Fira Code Medium" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

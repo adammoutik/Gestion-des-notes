@@ -244,5 +244,29 @@ public class ProfController implements Initializable {
             refresh();
             clear();
         }
+
+    }
+
+    public void deleteStudent(ActionEvent event){
+        if(EtudiantList.getValue() != null && inNote.getText()!=null && inType.getText()!=null && statusSelect.getValue() != null){
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to delete this item?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                NoteImpl noteImpl = new NoteImpl();
+                Note nt = noteImpl.findNote(Integer.parseInt(hiddenNoteId.getText()));
+                noteImpl.deleteNote(nt.getNote_id());
+                refresh();
+                System.out.println("Item deleted.");
+            } else {
+                System.out.println("Deletion canceled.");
+            }
+            clear();
+
+        }
     }
 }

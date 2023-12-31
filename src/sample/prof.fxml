@@ -46,7 +46,7 @@
                               <Font name="Fira Code Medium" size="12.0" />
                            </font>
                         </Button>
-                        <Button fx:id="removeStudent" layoutX="361.0" layoutY="20.0" mnemonicParsing="false" text="Remove">
+                        <Button fx:id="removeStudent" layoutX="361.0" layoutY="20.0" mnemonicParsing="false" onAction="#deleteStudent" text="Remove">
                            <font>
                               <Font name="Fira Code Medium" size="12.0" />
                            </font>
@@ -64,7 +64,7 @@
                      </font>
                   </Label>
                   <ChoiceBox fx:id="statusSelect" layoutX="502.0" layoutY="86.0" prefWidth="150.0" />
-                  <Label fx:id="className" layoutX="467.0" layoutY="-10.0" prefHeight="30.0" prefWidth="104.0">
+                  <Label fx:id="className" layoutX="467.0" layoutY="-10.0" prefHeight="30.0" prefWidth="104.0" visible="false">
                      <font>
                         <Font name="Fira Code Medium" size="12.0" />
                      </font>
