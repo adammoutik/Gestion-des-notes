@@ -174,7 +174,6 @@ public class DBUtils {
             } else {
                 String retrievedPassword = resultSet.getString("password");
                 String retrievedRole = resultSet.getString("role");
-
                 // Check password validity (consider using a secure password handling mechanism)
                 if (retrievedPassword.equals(password)) {
                     if(retrievedRole.equals("Professeur")){

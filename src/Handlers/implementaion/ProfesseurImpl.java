@@ -1,8 +1,10 @@
 package Handlers.implementaion;
 
+import Handlers.interfaces.IProfesseur;
+
 import java.sql.*;
 
-public class ProfesseurImpl {
+public class ProfesseurImpl implements IProfesseur {
     private String jdbcURL = "jdbc:mysql://localhost:3306/GestionNotes";
     private String jdbcUsername = "adamos";
     private String jdbcPassword = "password";
@@ -38,9 +40,9 @@ public class ProfesseurImpl {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception (logging, throwing custom exception, etc.) based on your requirements.
+
         }
-        return 0; // Return an appropriate default value if no match is found.
+        return 0;
     }
 
 

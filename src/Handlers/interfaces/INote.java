@@ -10,4 +10,5 @@ public interface INote {
     public void updateNote(Note note);
     public Note findNote(int id);
     public List<Note> findAllNotes();
+    public List<Note> getNoteByEtudiantId(int id);
 }

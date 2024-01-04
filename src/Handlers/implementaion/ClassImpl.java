@@ -2,6 +2,8 @@ package Handlers.implementaion;
 
 import Handlers.Model.Class;
 import Handlers.Model.*;
+import Handlers.interfaces.IClass;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class ClassImpl {
+public class ClassImpl implements IClass {
 
     private String jdbcURL = "jdbc:mysql://localhost:3306/GestionNotes";
     private String jdbcUsername = "adamos";
@@ -174,8 +176,5 @@ public class ClassImpl {
         return 0;
     }
 
-    public static void main(String[] args) {
-        System.out.println(new ClassImpl().findClassbyName("Java").getPf_id() == 0);
-    }
 
 }

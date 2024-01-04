@@ -2,11 +2,12 @@ package Handlers.implementaion;
 import Handlers.Model.Etudiant;
 import Handlers.Model.Note;
 import Handlers.Model.User;
+import Handlers.interfaces.IEtudiant;
 
 import java.sql.*;
 import java.util.*;
 
-public class EtudiantImpl {
+public class EtudiantImpl implements IEtudiant {
     private String jdbcURL = "jdbc:mysql://localhost:3306/GestionNotes";
     private String jdbcUsername = "adamos";
     private String jdbcPassword = "password";

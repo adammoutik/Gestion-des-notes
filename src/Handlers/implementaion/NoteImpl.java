@@ -160,18 +160,6 @@ public class NoteImpl implements INote {
         return res;
     }
 
-    public static void main(String[] args) {
-        NoteImpl noteImpl = new NoteImpl();
-
-        // Create a new note
-        Note noteToSave = new Note(1, 2, 18.5f,"Exam", "Validé", 2);
-        noteImpl.insertNote(noteToSave);
-
-        // Retrieve the created note
-        Note retrievedNote = noteImpl.findNote(1);
-        System.out.println(retrievedNote.toString());
-    }
-
 
 }
 
