@@ -5,6 +5,8 @@
 package Handlers.interfaces;
 
 import Handlers.Model.User;
+
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -12,7 +14,7 @@ import java.util.List;
  * @author pc
  */
 public interface IUser {
-    public void insertUser(User user);
+    public int insertUser(User user) throws SQLException;
     public void deleteUser(int id);
     public void updateUser(User user);
     public User findUser(int id);

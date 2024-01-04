@@ -1,5 +1,8 @@
 package Handlers.implementaion;
 
+import Handlers.Model.Class;
+import Handlers.Model.Professeur;
+import Handlers.Model.User;
 import Handlers.interfaces.IProfesseur;
 
 import java.sql.*;
@@ -9,17 +12,14 @@ public class ProfesseurImpl implements IProfesseur {
     private String jdbcUsername = "adamos";
     private String jdbcPassword = "password";
 
-    private static final String SELECT_ETUDIANT_BY_ID = "SELECT etudiant_id, class_id, user_id FROM Etudiant WHERE etudiant_id = ?";
+
     private static final String SELECT_PROF_BY_CLASS_ID = "SELECT * FROM Professeur WHERE pf_id = ?";
-    private static final String INSERT_ETUDIANT_SQL = "INSERT INTO Etudiant (etudiant_id, class_id, user_id) VALUES (?, ?, ?)";
-    private static final String UPDATE_ETUDIANT_SQL = "UPDATE Etudiant SET class_id = ?, user_id = ? WHERE etudiant_id = ?";
-    private static final String DELETE_ETUDIANT_SQL = "DELETE FROM Etudiant WHERE etudiant_id = ?";
 
 
     protected Connection getConnection() {
         Connection connection = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            java.lang.Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -43,6 +43,30 @@ public class ProfesseurImpl implements IProfesseur {
 
         }
         return 0;
+    }
+
+    public Professeur insertProfessor(int user_id, String class_name) throws SQLException {
+        Connection connection = getConnection();
+        String insertProfesseurQuery = "INSERT INTO Professeur (user_id) VALUES (?)";
+        try (PreparedStatement psInsertProf = connection.prepareStatement(insertProfesseurQuery, Statement.RETURN_GENERATED_KEYS)) {
+            psInsertProf.setInt(1, user_id);
+            int affectedRows = psInsertProf.executeUpdate();
+            if (affectedRows > 0) {
+                ResultSet genKeys = psInsertProf.getGeneratedKeys();
+                if (genKeys.next()) {
+                    int pf_id = genKeys.getInt(1);
+                    //UPDATE CLASS OWNERSHIP
+                    ClassImpl los = new ClassImpl();
+                    Class cl = los.findClassbyName(class_name);
+                    cl.setPf_id(pf_id);
+                    los.updateClass(cl);
+                    Professeur prof = new Professeur(user_id, cl);
+                    System.out.println("Professeur inserted successfully.");
+                    return prof;
+                }
+            }
+        }
+        return null;
     }
 
 

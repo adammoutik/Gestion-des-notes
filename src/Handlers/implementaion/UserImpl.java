@@ -21,8 +21,8 @@ public class UserImpl implements IUser {
     private String jdbcPassword = "password";
 
     private static final String INSERT_USER_SQL = "INSERT INTO User" +
-        "  (user_id, first_name, last_name, username, password, role) VALUES " +
-        " (?, ?, ?, ?, ? ,?);";
+        "  ( first_name, last_name, username, password, role) VALUES " +
+        " ( ?, ?, ?, ? ,?);";
 
     private static final String SELECT_USER_BY_ID = "select user_id, first_name, last_name, username, password, role from User where user_id =?";
 
@@ -46,20 +46,32 @@ public class UserImpl implements IUser {
     }
 
     @Override
-    public void insertUser(User user) {
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_SQL)) {
-            preparedStatement.setInt(1, user.getId());
-            preparedStatement.setString(2, user.getUsername());
-            preparedStatement.setString(3, user.getPassword());
-            preparedStatement.setString(4, user.getRole());
+    public int insertUser(User user) throws SQLException {
+        try {
+
+
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement =connection.prepareStatement(INSERT_USER_SQL, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, user.getFirst_name());
+            preparedStatement.setString(2, user.getLast_name());
+            preparedStatement.setString(3, user.getUsername());
+            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setString(5, user.getRole());
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+                } catch (SQLException e) {
             e.printStackTrace();
         }
+    } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
     }
 
-    @Override
+        @Override
     public User findUser(int id) {
         User user = null;
         try (Connection connection = getConnection();
@@ -145,13 +157,6 @@ public class UserImpl implements IUser {
         }
     }
 
-    public static void main(String[] args) {
-        UserImpl user = new UserImpl();
-        User u = user.findUser(1);
-
-            System.out.println(u.toString());
-
-    }
 
 
 }

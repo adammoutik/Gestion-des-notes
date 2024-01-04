@@ -79,7 +79,6 @@ public class ProfController implements Initializable {
     int index = -1;
 
 
-    // we assume that we passed the prof_id after login
 
 
     @Override
@@ -100,9 +99,10 @@ public class ProfController implements Initializable {
     }
 
     public void getProfInformations(int pf_id, int clsId) {
+        // fill the choicebox with students
         int cs = new ClassImpl().getClassIdByProfId(pf_id);
         List<Etudiant> etd = new EtudiantImpl().findEtudiantByClassId(cs);
-        if (!etd.isEmpty()) for (Etudiant e : etd) {
+        if (!etd.isEmpty())for (Etudiant e : etd) {
             System.out.println(e.toString());
             EtudiantList.getItems().add(e.geteId() + " " + e.getFirst_name() + " " + e.getLast_name());
         }
@@ -111,18 +111,17 @@ public class ProfController implements Initializable {
         }
         className.setText(new ClassImpl().findClass(clsId).getClassName());
         String clsName = className.getText();
-        System.out.println(clsName);
         Class targetClass = new ClassImpl().findClassbyName(clsName);
         List<Etudiant> targetEtd = targetClass.getEtudiants();
         List<fxNote> list = new ArrayList<>();
         for(Etudiant etds : targetEtd){
             if(etds.getNotes() != null){
                 for(Note nt : etds.getNotes()){
-                    list.add(new fxNote(nt.getEtudiant_id(), nt.getStatus(), nt.getType(), nt.getNote(),etds.getLast_name(), etds.getLast_name(), nt.getNote_id()));
+                    list.add(new fxNote(nt.getEtudiant_id(), nt.getStatus(), nt.getType(), nt.getNote(), etds.getLast_name(),etds.getFirst_name(), nt.getNote_id()));
                 }
             }
-
         }
+        // initialize the table with data
         ObservableList<fxNote> data = FXCollections.observableList(list);
         setupTableColumns();
         studentsTable.setItems(data);
@@ -148,7 +147,7 @@ public class ProfController implements Initializable {
         for(Etudiant etds : targetEtd){
             if(etds.getNotes() != null){
                 for(Note nt : etds.getNotes()){
-                    list.add(new fxNote(nt.getEtudiant_id(), nt.getStatus(), nt.getType(), nt.getNote(),etds.getLast_name(), etds.getLast_name(), nt.getNote_id()));
+                    list.add(new fxNote(nt.getEtudiant_id(), nt.getStatus(), nt.getType(), nt.getNote(), etds.getLast_name() ,etds.getFirst_name(), nt.getNote_id()));
                 }
             }
 
@@ -159,41 +158,30 @@ public class ProfController implements Initializable {
     }
 
 
-    private void getInitialTableData() {
-        String clsName = className.getText();
-        Class targetClass = new ClassImpl().findClassbyName(clsName);
-        List<Etudiant> targetEtd = targetClass.getEtudiants();
-        List<fxNote> list = new ArrayList<>();
-        for(Etudiant etd : targetEtd){
-            for(Note nt : etd.getNotes()){
-                list.add(new fxNote(nt.getEtudiant_id(), nt.getStatus(), nt.getType(), nt.getNote(),etd.getLast_name(), etd.getLast_name(), nt.getNote_id()));
-            }
-        }
 
-
-
-        ObservableList<fxNote> data = FXCollections.observableList(list);
-
-
-        setupTableColumns();
-        studentsTable.setItems(data);
-    }
-
-
-
+    // Grade Insertion
     public void addNote(){
-        if(EtudiantList.getValue() != null && inNote.getText()!=null && inType.getText()!=null && statusSelect.getValue() != null){
-            String[] res = EtudiantList.getValue().split(" ");
-            Etudiant et = new EtudiantImpl().findEtudiant(Integer.parseInt(res[0]));
-            Note nt = new Note(et.geteId(), Double.parseDouble(inNote.getText()),inType.getText(), statusSelect.getValue(),new ClassImpl().findClassbyName(className.getText()).getClass_id());
-            new NoteImpl().insertNote(nt);
-            refresh();
-            clear();
+        try{
+            if(EtudiantList.getValue() != null && inNote.getText()!=null && inType.getText()!=null && statusSelect.getValue() != null){
+                String[] res = EtudiantList.getValue().split(" ");
+                Etudiant et = new EtudiantImpl().findEtudiant(Integer.parseInt(res[0]));
+                Note nt = new Note(et.geteId(), Double.parseDouble(inNote.getText()),inType.getText(), statusSelect.getValue(),new ClassImpl().findClassbyName(className.getText()).getClass_id());
+                new NoteImpl().insertNote(nt);
+                refresh();
+                clear();
+            }
+        }catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Invalid input");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter a valid grade.");
+            alert.show();
         }
+
     }
 
 
-
+    //clear inputs
     public void clear(){
         EtudiantList.setValue(null);
         inNote.setText("");
@@ -201,6 +189,7 @@ public class ProfController implements Initializable {
         statusSelect.setValue("");
     }
 
+    // add data to inputs when i click a row
     public void addToTable(javafx.scene.input.MouseEvent mouseEvent) {
         index = studentsTable.getSelectionModel().getSelectedIndex();
 
@@ -209,10 +198,10 @@ public class ProfController implements Initializable {
         fxNote selectedNote = studentsTable.getItems().get(index);
         int selectedId = selectedNote.getId();
         for (String item : EtudiantList.getItems()) {
-            // EtudiantList items are in the format "e.geteId() + " " + e.getFirst_name() + " " + e.getLast_name()"
+            // EtudiantList items are in the format "ETUDIANT_ID + " " + ETUDIANT_FIRSTNAME + " " + ETUDIANT_LASTNAME"
             String[] parts = item.split(" ");
             if (parts.length >= 2) {
-                int etudiantId = Integer.parseInt(parts[0]); // Assuming ID is at index 0
+                int etudiantId = Integer.parseInt(parts[0]); // ID is at index 0
                 String firstName = parts[1];    //  First Name is at index 1
                 String lastName = parts[2];     // Last Name is at index 2
                 if (selectedId == etudiantId &&
@@ -231,31 +220,40 @@ public class ProfController implements Initializable {
 
 
     public void updateStudent(ActionEvent event) {
-        if(EtudiantList.getValue() != null && inNote.getText()!=null && inType.getText()!=null && statusSelect.getValue() != null){
-            String[] res = EtudiantList.getValue().split(" ");
-            NoteImpl noteImpl = new NoteImpl();
-            Etudiant et = new EtudiantImpl().findEtudiant(Integer.parseInt(res[0]));
-            System.out.println(hiddenNoteId.getText());
-            Note nt = noteImpl.findNote(Integer.parseInt(hiddenNoteId.getText()));
-            nt.setEtudiant_id(Integer.parseInt(res[0]));
-            nt.setNote(Double.parseDouble(inNote.getText()));
-            nt.setType(inType.getText());
-            nt.setStatus(statusSelect.getValue());
-            new NoteImpl().updateNote(nt);
-            refresh();
-            clear();
+
+
+
+        try{
+            if(EtudiantList.getValue() != null && inNote.getText()!=null && inType.getText()!=null && statusSelect.getValue() != null){
+
+                String[] res = EtudiantList.getValue().split(" ");
+                NoteImpl noteImpl = new NoteImpl();
+                Etudiant et = new EtudiantImpl().findEtudiant(Integer.parseInt(res[0]));
+                Note nt = noteImpl.findNote(Integer.parseInt(hiddenNoteId.getText()));
+                nt.setEtudiant_id(Integer.parseInt(res[0]));
+                nt.setNote(Double.parseDouble(inNote.getText()));
+                nt.setType(inType.getText());
+                nt.setStatus(statusSelect.getValue());
+                new NoteImpl().updateNote(nt);
+                refresh();
+                clear();
+            }
+        }catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Invalid input");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter a valid grade.");
+            alert.show();
         }
 
     }
 
     public void deleteStudent(ActionEvent event){
         if(EtudiantList.getValue() != null && inNote.getText()!=null && inType.getText()!=null && statusSelect.getValue() != null){
-
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Dialog");
             alert.setHeaderText(null);
-            alert.setContentText("Are you sure you want to delete this item?");
-
+            alert.setContentText("Are you sure you want to delete this item ?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 NoteImpl noteImpl = new NoteImpl();

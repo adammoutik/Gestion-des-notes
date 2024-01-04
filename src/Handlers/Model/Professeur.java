@@ -21,7 +21,11 @@ public class Professeur extends User {
         this.pf_id = pf_id;
         this.user_id = user_id;
         this.providedClass = providedClass;
-
+    }
+    public Professeur( int user_id, Class providedClass) {
+        super();
+        this.user_id = user_id;
+        this.providedClass = providedClass;
     }
 
     public int getPf_id() {

@@ -39,7 +39,6 @@ public class NoteImpl implements INote {
 
     @Override
     public void insertNote(Note note) {
-        //(note_id, etudiant_id, type, note, status, class_id)
         try {
             Connection conn = getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement(INSERT_NOTE_SQL);
